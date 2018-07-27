@@ -55,7 +55,7 @@ void *acceptFileThread(void *arg)
                 //要对null情况进行处理
                 if(readwordnum==0)
                 {
-                    printf("error for transmit");
+                    printf("error for transmit\n");
                     return NULL;
                 }
                 fileMessage+=buf;
@@ -116,7 +116,7 @@ void *acceptFileThread(void *arg)
                 readwordnum=read(connectSock,buf,1024);
                 if(readwordnum==0)
                 {
-                    printf("error for transmit");
+                    printf("error for transmit\n");
                     return NULL;
                 }
                 write(fd,buf,readwordnum);
@@ -126,7 +126,7 @@ void *acceptFileThread(void *arg)
                 readwordnum=read(connectSock,buf,filesizeint);
                 if(readwordnum==0)
                 {
-                    printf("error for transmit");
+                    printf("error for transmit\n");
                     return NULL;
                 }
                 write(fd, buf, readwordnum);

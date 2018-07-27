@@ -98,7 +98,7 @@ unsigned acceptFileThread(void *arg)
 				readwordnum = recv(connectSock, buf, headSize, NULL);
 				if (readwordnum == 0)
 				{
-					printf("error for transmit");
+					printf("error for transmit\n");
 					return NULL;
 				}
 				fileMessage += buf;
@@ -206,7 +206,7 @@ unsigned acceptFileThread(void *arg)
 					readwordnum = recv(connectSock, buf, 2048, 0);
 					if (readwordnum == 0)
 					{
-						printf("error for transmit");
+						printf("error for transmit\n");
 						return NULL;
 					}
 					DWORD writeNum = 0;
@@ -222,7 +222,7 @@ unsigned acceptFileThread(void *arg)
 					readwordnum = recv(connectSock, buf, filesizeint, NULL);
 					if (readwordnum == 0)
 					{
-						printf("error for transmit");
+						printf("error for transmit\n");
 						return NULL;
 					}
 					DWORD writeNum = 0;
