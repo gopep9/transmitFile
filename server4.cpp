@@ -33,7 +33,7 @@ void *acceptFileThread(void *arg)
         std::string fileMessage;
         while(headSize>0)
         {
-            if(headSize>1024)
+            if(headSize>=1024)
             {
                 readwordnum=read(connectSock,buf,1024);
                 if(readwordnum==0)
