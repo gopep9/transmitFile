@@ -79,7 +79,7 @@ unsigned acceptFileThread(void *arg)
 		std::string fileMessage;
 		while (headSize > 0)
 		{
-			if (headSize > 1024)
+			if (headSize >= 1024)
 			{
 				readwordnum = recv(connectSock, buf, 1024, NULL);
 				if (readwordnum == 0)
