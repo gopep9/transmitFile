@@ -27,18 +27,18 @@ void *acceptFileThread(void *arg)
     int connectSock=*(int*)arg;
     pthread_cond_signal(&g_cond);
     pthread_mutex_unlock(&g_mutex);
-    char buf[1025]={};
+    char buf[2048+1]={};
     int readwordnum=0;
     chdir(downloadPath.c_str());
     while(true)//可以弄成每个文件一个循环
     {
-        int headSize=1024;
+        int headSize=2048;
         std::string fileMessage;
         while(headSize>0)
         {
-            if(headSize>=1024)
+            if(headSize>=2048)
             {
-                readwordnum=read(connectSock,buf,1024);
+                readwordnum=read(connectSock,buf,2048);
                 if(readwordnum==0)
                 {
                     //读取结束
@@ -46,7 +46,7 @@ void *acceptFileThread(void *arg)
                 }
                 fileMessage+=buf;
                 headSize-=readwordnum;
-                memset(buf,0,1024);
+                memset(buf,0,2048);
             }else
             {
                 readwordnum=read(connectSock,buf,headSize);
@@ -58,7 +58,7 @@ void *acceptFileThread(void *arg)
                 }
                 fileMessage+=buf;
                 headSize-=readwordnum;
-                memset(buf,0,1024);
+                memset(buf,0,2048);
             }
         }
         //这里要保证是buf以零结尾
@@ -147,10 +147,10 @@ void *acceptFileThread(void *arg)
             int filesizeint=0;
             filesizestream>>filesizeint;
             while (filesizeint>0) {
-                //可能不能保证每次读取1024
-                if(filesizeint>=1024)
+                //可能不能保证每次读取2048
+                if(filesizeint>=2048)
                 {
-                    readwordnum=read(connectSock,buf,1024);
+                    readwordnum=read(connectSock,buf,2048);
                     if(readwordnum==0)
                     {
                         printf("error for transmit");
@@ -237,17 +237,17 @@ int transmitFile(int sock,std::string transFile,std::string fileName)
             printf("open file failed");
             return -1;
         }
-        char buf[1024]={};
+        char buf[2048]={};
         
         std::string headStr;
         std::stringstream headStrStream;
         headStrStream<<std::string("file:")<<fileName<<";"<<"size:"<<fileStat.st_size<<";";
         headStr=headStrStream.str();
-        //第一次的时候传一个1024大小的头部
+        //第一次的时候传一个2048大小的头部
         strcpy(buf, headStr.c_str());
-        write(sock,buf,1024);
+        write(sock,buf,2048);
         int readwordnum=0;
-        while((readwordnum=read(fd,buf,1024))>0)
+        while((readwordnum=read(fd,buf,2048))>0)
         {
             write(sock, buf, readwordnum);
         }
@@ -255,13 +255,13 @@ int transmitFile(int sock,std::string transFile,std::string fileName)
         //文件情况结束
     }
     else if(S_ISDIR(fileStat.st_mode)){
-        char buf[1024]={};
+        char buf[2048]={};
         std::string headStr;
         std::stringstream headStrStream;
         headStrStream<<std::string("document:")<<fileName<<";";
         headStr=headStrStream.str();
         strcpy(buf, headStr.c_str());
-        write(sock,buf,1024);
+        write(sock,buf,2048);
     }
     return 0;
 }
