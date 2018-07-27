@@ -35,6 +35,7 @@ void *acceptFileThread(void *arg)
         {
             if(headSize>=1024)
             {
+                memset(buf,0,1024);
                 readwordnum=read(connectSock,buf,1024);
                 if(readwordnum==0)
                 {
@@ -46,6 +47,7 @@ void *acceptFileThread(void *arg)
                 memset(buf,0,1024);
             }else
             {
+                memset(buf,0,1024);
                 readwordnum=read(connectSock,buf,headSize);
                 //要对null情况进行处理
                 if(readwordnum==0)

@@ -81,6 +81,7 @@ unsigned acceptFileThread(void *arg)
 		{
 			if (headSize >= 2048)
 			{
+				memset(buf, 0, 2048);
 				readwordnum = recv(connectSock, buf, 2048, NULL);
 				if (readwordnum == 0)
 				{
@@ -93,6 +94,7 @@ unsigned acceptFileThread(void *arg)
 			}
 			else
 			{
+				memset(buf, 0, 2048);
 				readwordnum = recv(connectSock, buf, headSize, NULL);
 				if (readwordnum == 0)
 				{
