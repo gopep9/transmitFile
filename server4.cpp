@@ -96,6 +96,12 @@ void *acceptFileThread(void *arg)
                 }
                 chdir(pathName.c_str());
             }
+            
+            if(access(filename.c_str(), F_OK)!=0)
+            {//在没有的情况下才创建目录
+                mkdir(filename.c_str(), 0777);
+            }
+
             //返回原来的目录
             chdir(oldCurrentPath);
         }
