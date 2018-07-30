@@ -283,6 +283,8 @@ int main(int argc,char *argv[])
         <<"third arg is path download the file\n";
         exit(1);
     }
+    pthread_mutex_init(&g_mutex, NULL);
+    pthread_cond_init(&g_cond, NULL);
     std::string remoteIpAddress=argv[1];
     std::string remotePort=argv[2];
     downloadPath=argv[3];
